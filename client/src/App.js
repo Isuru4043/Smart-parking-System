@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -54,7 +53,7 @@ function App() {
     // Send update via WebSocket if open
     if (ws && ws.readyState === WebSocket.OPEN) {
       const message = JSON.stringify({ slotIndex: index, reserved: newStatus });
-      ws.send(message);
+      ws.send(message); // Notify the backend
     }
   };
 
