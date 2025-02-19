@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ParkingService {
 
     private final ObjectMapper objectMapper;
+    private final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
     private final boolean[] parkingSlots = new boolean[12];
     private final ReentrantLock lock = new ReentrantLock();
     private final ConcurrentHashMap<Integer, ReentrantLock> slotLocks = new ConcurrentHashMap<>();
