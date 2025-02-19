@@ -77,11 +77,16 @@ public class ParkingService {
 
     private void sendMessage(WebSocketSession session, ParkingSlotMessage message) {
         try {
-            if (session.isOpen()) {
-                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+            if (session != null && session.isOpen()) {
+                synchronized (session) {
+                    session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+                }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // Log error and remove dead session
+            sessions.remove(session.getId());
         }
     }
+
+
 }
