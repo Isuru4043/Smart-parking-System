@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import carImage from './assets/car1.png';
 
 const SOCKET_URL = "ws://localhost:8080/websocket-endpoint";
 
@@ -68,12 +69,15 @@ function App() {
 
   return (
     <div className="container-fluid p-3">
-      <h1 className="text-center mb-4">Smart Parking System</h1>
+      <h1 className="text-center mb-4 boxy-text">
+        Smart Parking System
+      </h1>
       <div className="text-center mb-3">
         <span
           className={`badge ${
             connectionStatus === "Connected" ? "bg-success" : "bg-warning"
           }`}
+          style={{ fontFamily: "Arial, sans-serif" }}
         >
           {connectionStatus}
         </span>
@@ -81,25 +85,39 @@ function App() {
       <div className="container">
         <div className="row">
           {slots.map((reserved, index) => (
-            <div key={index} className="col-6 col-md-3 mb-4">
-              <div
-                onClick={() => handleSlotClick(index)}
-                className="d-flex justify-content-center align-items-center text-white fw-bold"
-                style={{
-                  backgroundColor: reserved ? "#dc3545" : "#198754",
-                  height: "150px",
-                  cursor: "pointer",
-                  borderRadius: "8px",
-                  transition: "all 0.3s ease",
-                  transform: `scale(${reserved ? "0.95" : "1"})`,
-                }}
-              >
-                <div>
-                  <div>Slot {index + 1}</div>
-                  <div className="small mt-2">
-                    {reserved ? "Reserved" : "Available"}
-                  </div>
-                </div>
+            <div
+              key={index}
+              onClick={() => handleSlotClick(index)}
+              className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center align-items-center text-white fw-bold mb-1" // Responsive column classes
+              style={{
+                backgroundColor: reserved ? "#f7c4c9" : "#f9d327", // Gray color for parking space
+                height: "150px",
+                cursor: "pointer",
+                borderRadius: "8px",
+                transition: "all 0.3s ease",
+                transform: `scale(${reserved ? "0.90" : "0.95"})`,
+                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "2px solid #343a40", // Darker gray border
+                fontFamily: "Arial, sans-serif"
+              }}
+            >
+              <div>Slot {index + 1}</div>
+              {reserved && (
+                <img
+                  src={carImage}
+                  alt="Car"
+                  style={{
+                    width: "200px", // Scaled up width
+                    height: "100px", // Scaled up height
+                  }}
+                />
+              )}
+              <div className="small mb-1">
+                {reserved ? "Reserved" : "Available"}
               </div>
             </div>
           ))}
